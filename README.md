@@ -2,8 +2,6 @@
 
 A comprehensive demonstration of XML technologies for modeling, validating, transforming, and visualizing meteorological data.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ---
 
 ## 📌 Overview
@@ -16,6 +14,18 @@ This project showcases the complete XML technology stack:
 - **SVG** for dynamic data visualization
 
 **Use Case:** Meteorological data management with automatic chart generation from weather measurements across Moroccan cities.
+
+---
+
+## 📸 Screenshots
+
+### XSD Schema Validation
+![XSD Validation Example](image_xsd.png)
+*XML structure validated against XSD schema showing proper data types and constraints*
+
+### SVG Chart Visualization
+![SVG Bar Chart Output](image_svg.png)
+*Interactive temperature bar chart generated from XML data using XSLT transformation*
 
 ---
 
@@ -50,27 +60,6 @@ Before running this project, ensure you have:
 
 ---
 
-## 📁 Project Structure
-
-```
-xml-meteo-project/
-├── data/
-│   └── meteo.xml          # Weather measurements data
-├── schemas/
-│   ├── meteo.dtd          # DTD validation schema
-│   └── meteo.xsd          # XSD validation schema
-├── transforms/
-│   └── meteo.xsl          # XSLT transformation stylesheet
-├── output/
-│   ├── index.html         # Generated HTML report
-│   └── chart.svg          # Generated SVG chart
-├── screenshots/
-│   ├── validation.png     # Schema validation example
-│   └── visualization.png  # SVG chart output
-└── README.md
-```
-
----
 
 ## 🗂️ XML Data Structure
 
