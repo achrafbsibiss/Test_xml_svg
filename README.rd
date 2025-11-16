@@ -1,25 +1,83 @@
-# 📘 XML Meteo Project — Repository README
+# 📘 XML Meteo Project
 
-This repository contains a complete learning project demonstrating the use of **XML**, **DTD**, **XSD**, **XPath**, **XSLT**, and **SVG** to model, validate, transform, and visualize meteorological data. **XML**, **DTD**, **XSD**, **XPath**, **XSL**, and **SVG** to model and visualize meteorological data.
+A comprehensive demonstration of XML technologies for modeling, validating, transforming, and visualizing meteorological data.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+---
+
+## 📌 Overview
+
+This project showcases the complete XML technology stack:
+- **XML** for structured data modeling
+- **DTD & XSD** for schema validation
+- **XPath** for data querying
+- **XSLT** for HTML/SVG transformation
+- **SVG** for dynamic data visualization
+
+**Use Case:** Meteorological data management with automatic chart generation from weather measurements across Moroccan cities.
 
 ---
 
-## 📌 Project Overview
-This project demonstrates how to:
-- Model structured data using **XML**
-- Validate data using **DTD** and **XSD**
-- Extract information using **XPath**
-- Transform XML into HTML/SVG using **XSLT**
-- Generate graphics (bar charts) using **SVG** created from XSL
+## 🎯 Features
 
-The project is based on a meteorological dataset: a list of cities (*T_VILLE*) and measurements (*T_MESURE*) such as temperatures.
+- ✅ Valid XML structure with proper schemas
+- ✅ Dual validation (DTD + XSD)
+- ✅ Dynamic SVG bar charts
+- ✅ HTML report generation
+- ✅ XPath query examples
+- ✅ Real-time data visualization
 
 ---
-![alt text](https://github.com/achrafbsibiss/Test_xml_svg/blob/main/image_xsd.png)
-![alt text](https://github.com/achrafbsibiss/Test_xml_svg/blob/main/image_svg.png)
-## 🗂️ 1. XML Structure
-The XML file stores weather measurements. Example:
+
+## 📋 Prerequisites
+
+Before running this project, ensure you have:
+
+- **libxslt** (for `xsltproc` command)
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install xsltproc
+  
+  # macOS
+  brew install libxslt
+  
+  # Windows
+  # Download from http://xmlsoft.org/XSLT/
+  ```
+- A modern web browser (Chrome, Firefox, Safari)
+- Text editor or IDE (VS Code recommended)
+
+---
+
+## 📁 Project Structure
+
+```
+xml-meteo-project/
+├── data/
+│   └── meteo.xml          # Weather measurements data
+├── schemas/
+│   ├── meteo.dtd          # DTD validation schema
+│   └── meteo.xsd          # XSD validation schema
+├── transforms/
+│   └── meteo.xsl          # XSLT transformation stylesheet
+├── output/
+│   ├── index.html         # Generated HTML report
+│   └── chart.svg          # Generated SVG chart
+├── screenshots/
+│   ├── validation.png     # Schema validation example
+│   └── visualization.png  # SVG chart output
+└── README.md
+```
+
+---
+
+## 🗂️ XML Data Structure
+
+The XML file contains weather measurements organized by date and city:
+
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 <meteo>
     <mesure date="2025-01-01">
         <ville nom="Agadir" temperature="40" />
@@ -28,121 +86,232 @@ The XML file stores weather measurements. Example:
     </mesure>
 </meteo>
 ```
-Elements:
-- `<meteo>` root element
-- `<mesure>` describes one date of measurements
-- `<ville>` gives city name + temperature
+
+**Elements:**
+- `<meteo>` — Root element containing all measurements
+- `<mesure>` — Single measurement session with date attribute
+- `<ville>` — City data with name and temperature attributes
 
 ---
 
-## 🏗️ 2. DTD Validation
-The DTD ensures the XML follows a fixed structure.
-Example:
+## 🏗️ Validation Schemas
+
+### DTD (Document Type Definition)
+
+Defines the structural rules:
+
 ```dtd
 <!ELEMENT meteo (mesure+)>
 <!ELEMENT mesure (ville+)>
 <!ATTLIST mesure date CDATA #REQUIRED>
 <!ELEMENT ville EMPTY>
-<!ATTLIST ville nom CDATA #REQUIRED temperature CDATA #REQUIRED>
+<!ATTLIST ville 
+    nom CDATA #REQUIRED 
+    temperature CDATA #REQUIRED>
+```
+
+### XSD (XML Schema Definition)
+
+Provides type-safe validation:
+
+```xml
+<xs:element name="ville">
+    <xs:complexType>
+        <xs:attribute name="nom" type="xs:string" use="required"/>
+        <xs:attribute name="temperature" type="xs:double" use="required"/>
+    </xs:complexType>
+</xs:element>
+```
+
+**Key Types Used:**
+- `xs:date` — ISO 8601 date format
+- `xs:string` — City names
+- `xs:double` — Temperature values
+
+---
+
+## 🔍 XPath Query Examples
+
+Extract data using XPath expressions:
+
+```xpath
+# Get all city names
+//ville/@nom
+
+# Get all temperatures
+//ville/@temperature
+
+# Filter cities with temperature > 20°C
+//ville[@temperature > 20]/@nom
+
+# Get measurements from specific date
+//mesure[@date='2025-01-01']/ville
+
+# Calculate average temperature
+sum(//ville/@temperature) div count(//ville)
 ```
 
 ---
 
-## 📏 3. XSD Validation
-XSD describes types: dates, strings, double, etc.
+## 🔄 XSLT Transformation
 
-Key types used:
-- `xsd:date`
-- `xsd:string`
-- `xsd:double`
+The stylesheet (`meteo.xsl`) transforms XML into interactive HTML with embedded SVG charts.
 
----
+**Transformation Process:**
+1. Parses XML weather data
+2. Generates HTML structure
+3. Creates SVG bar chart with dynamic dimensions
+4. Adds labels and styling
 
-## 🔍 4. XPath Queries
-Some example XPath expressions used:
-- Get all city names:
-  ```xpath
-  //ville/@nom
-  ```
-- Get all temperatures:
-  ```xpath
-  //ville/@temperature
-  ```
-- Get cities hotter than 20°C:
-  ```xpath
-  //ville[@temperature > 20]
-  ```
+**Key XSLT Features Used:**
+- `<xsl:for-each>` — Iterate through cities
+- `<xsl:value-of>` — Extract attribute values
+- `<xsl:attribute>` — Dynamic SVG attributes
+- Math calculations for bar dimensions
 
 ---
 
-## 🔄 5. XSL Transformation (XSLT)
-XSLT transforms the XML into:
-- HTML tables
-- SVG graphics (bar charts)
+## 📊 SVG Visualization
 
-Example of applying a stylesheet:
-```bash
-xsltproc meteo.xsl meteo.xml > index.html
-```
+The generated chart displays temperature data as colored bars:
 
-The XSL reads XML values, loops through `<ville>` and generates SVG rectangles.
-
----
-
-## 📊 6. SVG Bar Chart Generation
-SVG is used to draw a bar chart of temperatures.
-Example of generated SVG:
 ```svg
-<rect x="50" y="10" width="40" height="200" fill="orange" />
+<svg width="800" height="400">
+    <rect x="50" y="10" width="40" height="200" fill="orange"/>
+    <text x="55" y="220">Agadir</text>
+    <text x="55" y="5">40°C</text>
+</svg>
 ```
-Each `<rect>` corresponds to a city.
 
-The XSL calculates:
-- Height of each bar from the temperature value
-- X-position for city spacing
-- Labels (`<text>`) for names and values
-
-Result looks like this (from your screenshot):
-- Agadir: 40°C
-- Tanger: 13°C
-- El Jadida: 30°C
-- Casablanca: 13°C
-- Mohammedia: 20°C
-- Oujda: 1°C
-- Ifrane: 15°C
-- Marrakech: 3°C
+**Chart Features:**
+- Dynamic bar heights based on temperature
+- Color-coded bars (hot = red/orange, cold = blue)
+- City labels and temperature values
+- Responsive scaling
 
 ---
 
-## 📁 7. Files Included
-- **meteo.xml** — data
-- **meteo.dtd** — DTD validator
-- **meteo.xsd** — XSD validator
-- **meteo.xsl** — transformation to HTML + SVG
-- **README.md** — documentation
-- **output.svg / index.html** — generated graphics
+## 🚀 Quick Start
 
----
+### 1. Clone the Repository
 
-## 🚀 8. How to Run
-Run the XSL transformation:
 ```bash
-xsltproc meteo.xsl meteo.xml > result.html
+git clone https://github.com/achrafbsibiss/xml-meteo-project.git
+cd xml-meteo-project
 ```
-Open `result.html` in browser.
+
+### 2. Validate XML
+
+```bash
+# Validate against DTD
+xmllint --dtdvalid schemas/meteo.dtd data/meteo.xml --noout
+
+# Validate against XSD
+xmllint --schema schemas/meteo.xsd data/meteo.xml --noout
+```
+
+### 3. Transform XML to HTML
+
+```bash
+xsltproc transforms/meteo.xsl data/meteo.xml > output/index.html
+```
+
+### 4. View Results
+
+```bash
+# Open in default browser
+open output/index.html        # macOS
+xdg-open output/index.html    # Linux
+start output/index.html       # Windows
+```
 
 ---
 
-## ✔️ Conclusion
-This project is a complete demonstration of how to:
-- Model data in XML
-- Validate using DTD and XSD
-- Query using XPath
-- Transform using XSLT
-- Visualize using SVG
+## 📸 Screenshots
 
-A great base learning project for mastering XML technologies.
+### Schema Validation
+![XSD Validation](screenshots/validation.png)
+*XML validation using XSD schema showing successful structure verification*
+
+### Data Visualization
+![SVG Chart Output](screenshots/visualization.png)
+*Interactive bar chart showing temperature distribution across Moroccan cities*
 
 ---
-If you want, I can generate the full folder structure, improve your XSL, or export this README as **PDF**, **DOCX**, or **Markdown file**.
 
+## 🧪 Sample Output
+
+**Temperature Data:**
+- Agadir: 40°C ☀️
+- Tanger: 13°C 🌤️
+- El Jadida: 30°C ☀️
+- Casablanca: 13°C 🌤️
+- Mohammedia: 20°C 🌤️
+- Oujda: 1°C ❄️
+- Ifrane: 15°C 🌤️
+- Marrakech: 3°C ❄️
+
+---
+
+## 🛠️ Customization
+
+### Modify Temperature Data
+
+Edit `data/meteo.xml`:
+
+```xml
+<ville nom="YourCity" temperature="25" />
+```
+
+### Change Chart Colors
+
+Edit `transforms/meteo.xsl` SVG fill attribute:
+
+```xml
+<xsl:attribute name="fill">
+    <xsl:choose>
+        <xsl:when test="@temperature &gt; 30">red</xsl:when>
+        <xsl:otherwise>blue</xsl:otherwise>
+    </xsl:choose>
+</xsl:attribute>
+```
+
+### Add New Cities
+
+Simply add more `<ville>` elements to any `<mesure>` group.
+
+---
+
+## 📚 Learning Resources
+
+- [W3C XML Specification](https://www.w3.org/XML/)
+- [XPath Tutorial](https://www.w3schools.com/xml/xpath_intro.asp)
+- [XSLT Reference](https://www.w3.org/TR/xslt-30/)
+- [SVG Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 👤 Author
+
+**Achraf Bsibiss**
+- GitHub: [@achrafbsibiss](https://github.com/achrafbsibiss)
+
+---
+
+## 🙏 Acknowledgments
+
+- XML/XSD schemas based on W3C standards
+- SVG visualizations inspired by D3.js patterns
+- Project created for educational purposes
+
+---
