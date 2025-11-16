@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meteo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="meteo.xsd">
+    <mesure date="2024-11-11">
+        <ville nom="Agadir" temperature="23"/>
+        <ville nom="Tanger" temperature="21"/>
+        <ville nom="EL JADIDA" temperature="10"/>
+        <ville nom="CASABLANCA" temperature="3"/>
+        <ville nom="MOHMMADIA" temperature="30"/>
+        <ville nom="OUJDA" temperature="31"/>
+        <ville nom="IFRANE" temperature="5"/>
+        <ville nom="Marrakech" temperature="23"/>
+    </mesure>
+    
+    <mesure date="2024-12-12">
+        <ville nom="Agadir" temperature="40"/>
+        <ville nom="Tanger" temperature="13"/>
+        <ville nom="EL JADIDA" temperature="30"/>
+        <ville nom="CASABLANCA" temperature="13"/>
+        <ville nom="MOHMMADIA" temperature="20"/>
+        <ville nom="OUJDA" temperature="1"/>
+        <ville nom="IFRANE" temperature="15"/>
+        <ville nom="Marrakech" temperature="3"/>
+    </mesure>
+</meteo>
